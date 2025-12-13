@@ -1,7 +1,7 @@
 package com.learn.brainbridge.dtos;
 
 import com.learn.brainbridge.annotations.PasswordMatches;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
  * RegisterUserDTO - DTO for user registration
  * Contains password field which is not in regular UserDTO
  */
+@Schema(description = "User registration data")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

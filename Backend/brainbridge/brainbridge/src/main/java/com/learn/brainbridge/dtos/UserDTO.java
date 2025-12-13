@@ -1,5 +1,6 @@
 package com.learn.brainbridge.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
  * 4. @Size - Validates string length (min/max)
  * 5. Validation annotations are checked when @Valid is used in controller
  */
+@Schema(description = "User data transfer object")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
