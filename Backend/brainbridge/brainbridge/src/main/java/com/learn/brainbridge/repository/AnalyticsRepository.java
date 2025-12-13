@@ -17,28 +17,33 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Long> {
     
     /**
      * Find all analytics for a project
+     * Uses project.id to query by project ID
      */
-    List<Analytics> findByProjectId(Long projectId);
+    @Query("SELECT a FROM Analytics a WHERE a.project.id = :projectId")
+    List<Analytics> findByProjectId(@Param("projectId") Long projectId);
     
     /**
      * Find analytics by event type
      */
-    List<Analytics> findByProject_IdAndEventType(Long projectId,String eventType);
+    List<Analytics> findByEventType(String eventType);
     
     /**
      * Find analytics for a project by event type
      */
-    List<Analytics> findByProjectIdAndEventType(Long projectId, String eventType);
+    @Query("SELECT a FROM Analytics a WHERE a.project.id = :projectId AND a.eventType = :eventType")
+    List<Analytics> findByProjectIdAndEventType(@Param("projectId") Long projectId, @Param("eventType") String eventType);
     
     /**
      * Count analytics events for a project
      */
-    long countByProjectId(Long projectId);
+    @Query("SELECT COUNT(a) FROM Analytics a WHERE a.project.id = :projectId")
+    long countByProjectId(@Param("projectId") Long projectId);
     
     /**
      * Count analytics events for a project by event type
      */
-    long countByProject_IdAndEventType(Long projectId, String eventType);
+    @Query("SELECT COUNT(a) FROM Analytics a WHERE a.project.id = :projectId AND a.eventType = :eventType")
+    long countByProjectIdAndEventType(@Param("projectId") Long projectId, @Param("eventType") String eventType);
     
     /**
      * Find analytics within a date range

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -55,6 +56,19 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(info)
                 .servers(List.of(devServer, prodServer));
+    }
+
+    /**
+     * Configure which packages Swagger should scan
+     * This helps avoid scanning entity classes and focuses on DTOs
+     * Using default group name to avoid issues
+     */
+    @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("default")
+                .pathsToMatch("/api/**")
+                .build();
     }
 }
 

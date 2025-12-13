@@ -1,5 +1,6 @@
 package com.learn.brainbridge.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * 1. Analytics DTOs are used for tracking and reporting
  * 2. Event types: VIEW, LIKE, COMMENT, SHARE, etc.
  */
+@Schema(description = "Analytics data transfer object")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package com.learn.brainbridge.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
  * 1. @NotNull - Validation: Field cannot be null
  * 2. DTOs simplify complex entity relationships for API consumers
  */
+@Schema(description = "Comment data transfer object")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

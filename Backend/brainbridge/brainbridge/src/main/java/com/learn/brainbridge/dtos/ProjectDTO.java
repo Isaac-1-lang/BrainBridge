@@ -1,5 +1,6 @@
 package com.learn.brainbridge.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * 3. @Size - Validation: Limits string length
  * 4. DTOs don't include entity relationships directly (no User object, just userId)
  */
+@Schema(description = "Project data transfer object")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,8 +33,12 @@ public class ProjectDTO {
     @Size(max = 5000, message = "Description cannot exceed 5000 characters")
     private String description;
 
-    @Size(max = 10, message = "Programming languages cannot exceed 10 characters")
-    private String[] programmingLanguage = new String[10];
+    /**
+     * Array of programming languages used in the project
+     * Maximum 10 languages allowed
+     */
+    @Schema(description = "Array of programming languages", example = "[\"Java\", \"JavaScript\"]", type = "array")
+    private String[] programmingLanguage;
 
     private Boolean isPublic = true;
 

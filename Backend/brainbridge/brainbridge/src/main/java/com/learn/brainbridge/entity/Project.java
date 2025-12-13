@@ -1,9 +1,11 @@
 package com.learn.brainbridge.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,7 +20,9 @@ import java.util.List;
  * 3. @OneToMany - One project has many comments (one-to-many relationship)
  * 4. @JoinColumn - Specifies the foreign key column name
  * 5. CascadeType - Defines what happens to related entities when parent is modified
+ * 6. @Hidden - Prevents Swagger from including this entity in API documentation
  */
+@Hidden
 @Entity
 @Table(name = "projects")
 @Data
@@ -62,9 +66,11 @@ public class Project {
      * @ManyToOne - Many projects belong to one user
      * @JoinColumn - Creates foreign key column "user_id" in projects table
      * FetchType.LAZY - Loads user only when accessed (better performance)
+     * @JsonIgnore - Prevents circular reference when serializing to JSON
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     /**
@@ -72,8 +78,10 @@ public class Project {
      * mappedBy - Points to the "project" field in Comment entity
      * CascadeType.ALL - Deleting project deletes all its comments
      * orphanRemoval - Deleting comment from list removes it from database
+     * @JsonIgnore - Prevents circular reference when serializing to JSON
      */
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)

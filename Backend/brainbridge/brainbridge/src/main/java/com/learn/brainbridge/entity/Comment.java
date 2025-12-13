@@ -1,9 +1,11 @@
 package com.learn.brainbridge.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +16,9 @@ import java.time.LocalDateTime;
  * 1. @ManyToOne - Many comments belong to one project
  * 2. @ManyToOne - Many comments belong to one user (commenter)
  * 3. Bidirectional relationship - Comment knows its Project, Project knows its Comments
+ * 4. @Hidden - Prevents Swagger from including this entity in API documentation
  */
+@Hidden
 @Entity
 @Table(name = "comments")
 @Data
@@ -32,17 +36,21 @@ public class Comment {
     /**
      * @ManyToOne - Many comments belong to one project
      * @JoinColumn - Creates foreign key column "project_id" in comments table
+     * @JsonIgnore - Prevents circular reference when serializing to JSON
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
+    @JsonIgnore
     private Project project;
 
     /**
      * @ManyToOne - Many comments belong to one user (the commenter)
      * @JoinColumn - Creates foreign key column "user_id" in comments table
+     * @JsonIgnore - Prevents circular reference when serializing to JSON
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @Column(name = "is_edited")
