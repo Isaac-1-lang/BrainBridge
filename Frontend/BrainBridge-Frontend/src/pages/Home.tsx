@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
+import Button from '../components/button';
 import Card from '../components/Card';
 import SteppingUpSVG from '../assets/undraw_stepping-up_i0i7.svg';
 import MindMapSVG from '../assets/undraw_mind-map_i9bv.svg';
 import PresentationSVG from '../assets/undraw_hr-presentation_uunk.svg';
 import SharingKnowledgeSVG from '../assets/undraw_sharing-knowledge_2jx3.svg';
+import klabLogo from '../assets/klabLogo.png';
+import githubLogo from '../assets/GitHub-logo.png';
+import norrskenLogo from '../assets/66911f85f3709b75ac8707ca_Norrsken_OG.png';
 import './Home.css';
+import rcaLogo from "../assets/images.png"
 
 const Home = () => {
   const features = [
@@ -31,7 +35,24 @@ const Home = () => {
     },
   ];
 
-  const partners = ['RCA', 'Tech Hub A', 'Tech Hub B', 'Innovation Lab'];
+  const partners = [
+    {
+      name: 'kLab',
+      logo: klabLogo,
+    },
+    {
+      name: 'GitHub',
+      logo: githubLogo,
+    },
+    {
+      name: 'Norrsken',
+      logo: norrskenLogo,
+    },
+    {
+      name: 'Rwanda Coding Academy',
+      logo: rcaLogo,
+    },
+  ];
 
   return (
     <div className="home-page">
@@ -96,7 +117,7 @@ const Home = () => {
           <div className="partners-grid">
             {partners.map((partner, idx) => (
               <div key={idx} className="partner-item">
-                <span>{partner}</span>
+                <img src={partner.logo} alt={partner.name} className="partner-logo" />
               </div>
             ))}
           </div>

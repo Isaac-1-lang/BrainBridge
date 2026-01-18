@@ -4,10 +4,10 @@ import './SettingPage.css';
 const SettingPage = () => {
   // Dummy user data - will be replaced with API call later
   const [userData, setUserData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    username: 'johndoe',
+    firstName: 'NIYOBYOSE',
+    lastName: 'Isaac Precieux',
+    email: 'isaprecieux@gmail.com',
+    username: 'Isaac-1-lang',
     profileImageUrl: ''
   });
 

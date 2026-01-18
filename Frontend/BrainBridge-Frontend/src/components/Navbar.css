@@ -27,6 +27,7 @@
 
 .navbar-logo img {
   width: 40px;
+  display: flex;
   height: 40px;
 }
 

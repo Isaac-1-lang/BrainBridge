@@ -4,7 +4,7 @@ import './Navbar.css';
 const Navbar = () => {
   // Dummy user data - will be replaced with actual auth later
   const isLoggedIn = false; // Change to true to see logged-in state
-  const username = 'John Doe';
+  const username = 'NIYOBYOSE Isaac Precieux';
 
   return (
     <nav className="navbar">
