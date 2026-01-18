@@ -1,3 +1,5 @@
+<img width="1896" height="990" alt="image" src="https://github.com/user-attachments/assets/b4fd9232-5c68-4db9-b114-a626f2366989" />
+
 # BrainBridge
 
 A full-stack web application built with Spring Boot and React, designed to facilitate collaboration and project management.
