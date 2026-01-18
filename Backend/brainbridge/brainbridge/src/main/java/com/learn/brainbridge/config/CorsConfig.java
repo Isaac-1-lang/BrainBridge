@@ -32,15 +32,14 @@ public class CorsConfig {
         
         // Allow requests from frontend origin (Vite default port is 5173)
         config.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5173",  // Vite dev server
-            "http://localhost:3000",   // React default
-            "http://localhost:5174",   // Alternative Vite port
+            "http://localhost:5173",// Vite dev server
+            "https://brain-bridge-eight.vercel.app/",
             "http://127.0.0.1:5173",
             "http://127.0.0.1:3000"
         ));
         
         // Allow all HTTP methods
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         
         // Allow all headers
         config.setAllowedHeaders(Arrays.asList("*"));

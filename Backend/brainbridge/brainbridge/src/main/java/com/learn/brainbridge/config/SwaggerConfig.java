@@ -33,13 +33,13 @@ public class SwaggerConfig {
         devServer.setDescription("Development Server");
 
         Server prodServer = new Server();
-        prodServer.setUrl("https://api.brainbridge.com");
+        prodServer.setUrl("https://brain-bridge-eight.vercel.app/");
         prodServer.setDescription("Production Server");
 
         Contact contact = new Contact();
-        contact.setEmail("support@brainbridge.com");
+        contact.setEmail("isaprecieux112@gmail.com");
         contact.setName("BrainBridge Support");
-        contact.setUrl("https://brainbridge.com");
+        contact.setUrl("https://brain-bridge-eight.vercel.app/");
 
         License license = new License()
                 .name("MIT License")

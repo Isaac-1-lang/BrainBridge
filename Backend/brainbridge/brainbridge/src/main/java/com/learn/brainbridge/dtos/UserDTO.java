@@ -46,6 +46,12 @@ public class UserDTO {
     private String profileImageUrl;
     private Boolean isActive;
     private Boolean isEmailVerified;
+    private String Bio;
+    private String Organization_name;
+    private LocalDateTime lastLogin;
+    private boolean isActive;
+    private LocalDateTime deActivated;
+    private
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
