@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Card from '../components/Card';
-import Button from '../components/Button';
+
 import './Contact.css';
 import attachment from '../assets/attach-file.png';
 import telephone from '../assets/telephone.png';
 import address from '../assets/location.png';
-
-const Contact = () => {
+import Button from '../components/button';
+const Contact = ()=> {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
