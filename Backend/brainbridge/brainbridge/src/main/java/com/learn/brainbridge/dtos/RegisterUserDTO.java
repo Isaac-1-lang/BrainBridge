@@ -36,12 +36,17 @@ public class RegisterUserDTO {
     private String password;
 
     @NotBlank(message = "Confirm password is required")
-    @Size(min = 8, message = "Confirm password must be at least 8 characters")
+    @Size(message = "Confirm password must be at least 8 characters")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Confirm password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")
     private String confirmPassword;
 
     
     private String firstName;
     private String lastName;
+    private String phone;
+    private String biography;
+    @NotBlank(message="Organization name is required")
+    private String organizationName;
+
 }
 

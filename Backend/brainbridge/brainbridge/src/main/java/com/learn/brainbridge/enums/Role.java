@@ -1,7 +1,7 @@
 package com.learn.brainbridge.enums;
 
 
-public Enum Role {
+public enum Role {
         ADMIN,
         USER
-        }
+}
