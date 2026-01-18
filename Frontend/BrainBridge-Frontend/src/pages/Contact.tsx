@@ -2,6 +2,9 @@ import { useState } from 'react';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import './Contact.css';
+import attachment from '../assets/attach-file.png';
+import telephone from '../assets/telephone.png';
+import address from '../assets/location.png';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -98,24 +101,24 @@ const Contact = () => {
             <Card className="info-card">
               <h3>Get in Touch</h3>
               <div className="info-item">
-                <span className="info-icon">📧</span>
+                <span className="info-icon"><img src={attachment} alt="Mail-icon" className='contact-icon' /></span>
                 <div>
                   <strong>Email</strong>
                   <p>support@brainbridge.com</p>
                 </div>
               </div>
               <div className="info-item">
-                <span className="info-icon">📱</span>
+                <span className="info-icon"><img src={telephone} alt="telephone-icon" className='contact-icon' /></span>
                 <div>
                   <strong>Phone</strong>
-                  <p>+1 (555) 123-4567</p>
+                  <p>+250 7885-98775</p>
                 </div>
               </div>
               <div className="info-item">
-                <span className="info-icon">📍</span>
+                <span className="info-icon"><img src={address} alt="address-icon" className='contact-icon' /></span>
                 <div>
                   <strong>Address</strong>
-                  <p>123 Innovation Street<br />Tech City, TC 12345</p>
+                  <p>123 Innovation Street<br />Kigali, Rwanda</p>
                 </div>
               </div>
             </Card>
