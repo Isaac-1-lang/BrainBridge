@@ -1,0 +1,159 @@
+.features-page {
+  padding: 4rem 0;
+  min-height: calc(100vh - 200px);
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.features-header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+}
+
+.features-header p {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.features-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.feature-main-card {
+  padding: 3rem;
+}
+
+.feature-main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.feature-main-text h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+}
+
+.feature-main-text p {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+.feature-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+.feature-main-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-main-illustration img {
+  max-width: 100%;
+  height: auto;
+}
+
+.features-additional {
+  margin-top: 4rem;
+}
+
+.features-additional h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--color-text-primary);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  padding: 2rem;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+
+.feature-card p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 968px) {
+  .feature-main-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .feature-main-illustration {
+    order: -1;
+  }
+
+  .feature-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .features-page {
+    padding: 2rem 0;
+  }
+
+  .features-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .feature-main-card {
+    padding: 1.5rem;
+  }
+
+  .feature-main-text h2 {
+    font-size: 1.75rem;
+  }
+
+  .features-additional h2 {
+    font-size: 2rem;
+  }
+}

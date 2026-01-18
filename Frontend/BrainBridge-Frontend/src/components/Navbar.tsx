@@ -10,13 +10,15 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <span className="logo-icon"><img src="./logo.png" alt="" /></span>
+          <span className="logo-icon"><img src="./logo.png" /></span>
           <span className="logo-text">BrainBridge</span>
         </Link>
 
         <div className="navbar-menu">
           <Link to="/" className="navbar-link">Home</Link>
-          <Link to="/read" className="navbar-link">Browse Projects</Link>
+          <Link to="/about" className="navbar-link">About</Link>
+          <Link to="/features" className="navbar-link">Features</Link>
+          <Link to="/contact" className="navbar-link">Contact</Link>
           
           {isLoggedIn ? (
             <>

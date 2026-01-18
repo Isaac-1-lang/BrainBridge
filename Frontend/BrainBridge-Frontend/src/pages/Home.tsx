@@ -1,113 +1,129 @@
 import { Link } from 'react-router-dom';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import SteppingUpSVG from '../assets/undraw_stepping-up_i0i7.svg';
+import MindMapSVG from '../assets/undraw_mind-map_i9bv.svg';
+import PresentationSVG from '../assets/undraw_hr-presentation_uunk.svg';
+import SharingKnowledgeSVG from '../assets/undraw_sharing-knowledge_2jx3.svg';
 import './Home.css';
 
 const Home = () => {
-  // Dummy featured projects
-  const featuredProjects = [
+  const features = [
     {
-      id: 1,
-      title: 'E-Commerce Platform',
-      description: 'A full-stack e-commerce solution with React and Node.js',
-      languages: ['React', 'Node.js', 'MongoDB'],
-      views: 1250,
-      likes: 89,
-      author: 'John Doe',
-      createdAt: '2025-12-10'
+      title: 'Project Management',
+      description: 'Organize and track your projects with ease',
+      icon: SteppingUpSVG,
     },
     {
-      id: 2,
-      title: 'Task Management App',
-      description: 'Collaborative task management with real-time updates',
-      languages: ['Vue.js', 'Python', 'PostgreSQL'],
-      views: 980,
-      likes: 67,
-      author: 'Jane Smith',
-      createdAt: '2025-12-08'
+      title: 'Mind Mapping',
+      description: 'Visualize ideas and connections',
+      icon: MindMapSVG,
     },
     {
-      id: 3,
-      title: 'Weather Dashboard',
-      description: 'Beautiful weather dashboard with API integration',
-      languages: ['React', 'TypeScript', 'REST API'],
-      views: 750,
-      likes: 45,
-      author: 'Mike Johnson',
-      createdAt: '2025-12-05'
-    }
+      title: 'Team Collaboration',
+      description: 'Work together seamlessly',
+      icon: PresentationSVG,
+    },
+    {
+      title: 'Knowledge Sharing',
+      description: 'Share insights and learn from peers',
+      icon: SharingKnowledgeSVG,
+    },
   ];
 
+  const partners = ['RCA', 'Tech Hub A', 'Tech Hub B', 'Innovation Lab'];
+
   return (
-    <div className="home">
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Welcome to BrainBridge</h1>
-          <p className="hero-subtitle">
-            Share your code, collaborate with developers, and build amazing projects together
-          </p>
-          <div className="hero-buttons">
-            <Link to="/register" className="btn btn-primary">Get Started</Link>
-            <Link to="/read" className="btn btn-outline">Browse Projects</Link>
+    <div className="home-page">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-container">
+          <div className="hero-content">
+            <h1 className="hero-title">
+              Bridge Ideas to Innovation
+            </h1>
+            <p className="hero-description">
+              Connect educational institutions and tech hubs through a powerful 
+              platform for project management, collaboration, and knowledge sharing.
+            </p>
+            <div className="hero-actions">
+              <Link to="/register">
+                <Button size="lg" variant="primary">
+                  Get Started
+                </Button>
+              </Link>
+              <Link to="/features">
+                <Button size="lg" variant="outline">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="hero-illustration">
+            <img src={SteppingUpSVG} alt="Stepping up" />
           </div>
         </div>
       </section>
 
-      <section className="features">
+      {/* Features Section */}
+      <section className="features-section">
         <div className="container">
-          <h2>Why Choose BrainBridge?</h2>
+          <div className="section-header">
+            <h2>Powerful Features</h2>
+            <p>Everything you need to manage projects and collaborate effectively</p>
+          </div>
           <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">🚀</div>
-              <h3>Fast & Reliable</h3>
-              <p>Lightning-fast code sharing and collaboration</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🤝</div>
-              <h3>Collaborative</h3>
-              <p>Work together with developers worldwide</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">💡</div>
-              <h3>AI-Powered</h3>
-              <p>Get AI assistance for your coding projects</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">📊</div>
-              <h3>Analytics</h3>
-              <p>Track your project's performance and engagement</p>
-            </div>
+            {features.map((feature, idx) => (
+              <Card key={idx} hover className="feature-card">
+                <div className="feature-icon-wrapper">
+                  <img src={feature.icon} alt={feature.title} />
+                </div>
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="featured-projects">
+      {/* Partners Section */}
+      <section className="partners-section">
         <div className="container">
-          <h2>Featured Projects</h2>
-          <div className="projects-grid">
-            {featuredProjects.map((project) => (
-              <div key={project.id} className="project-card">
-                <div className="project-header">
-                  <h3>
-                    <Link to={`/projects/${project.id}`}>{project.title}</Link>
-                  </h3>
-                  <span className="project-author">by {project.author}</span>
-                </div>
-                <p className="project-description">{project.description}</p>
-                <div className="project-languages">
-                  {project.languages.map((lang, idx) => (
-                    <span key={idx} className="language-tag">{lang}</span>
-                  ))}
-                </div>
-                <div className="project-stats">
-                  <span>👁️ {project.views} views</span>
-                  <span>❤️ {project.likes} likes</span>
-                  <span>📅 {project.createdAt}</span>
-                </div>
+          <div className="section-header">
+            <h2>Trusted by Leading Institutions</h2>
+            <p>Join the growing network of educational institutions and tech hubs</p>
+          </div>
+          <div className="partners-grid">
+            {partners.map((partner, idx) => (
+              <div key={idx} className="partner-item">
+                <span>{partner}</span>
               </div>
             ))}
           </div>
-          <div className="view-all">
-            <Link to="/read" className="btn btn-primary">View All Projects</Link>
-          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="container">
+          <Card className="cta-card">
+            <div className="cta-content">
+              <h2>Ready to Get Started?</h2>
+              <p>Join BrainBridge today and transform how you collaborate on projects</p>
+              <div className="cta-actions">
+                <Link to="/register">
+                  <Button size="lg" variant="primary">
+                    Sign Up Free
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button size="lg" variant="outline">
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
     </div>
@@ -115,4 +131,3 @@ const Home = () => {
 };
 
 export default Home;
-
