@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.learn.brainbridge.enums.ProjectStatus;
+import com.learn.brainbridge.enums.ProjectVisibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,55 +37,70 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = 255)
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    /**
-     * @ElementCollection - Stores a collection of simple values
-     * @CollectionTable - Creates a separate table for the collection
-     * Stores programming languages as a list in a separate table
-     */
-    @ElementCollection
-    @CollectionTable(name = "project_programming_languages", joinColumns = @JoinColumn(name = "project_id"))
-    @Column(name = "programming_language", length = 50)
-    private List<String> programmingLanguages;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProjectStatus status = ProjectStatus.DRAFT;
 
-    @Column(name = "is_public")
-    private Boolean isPublic = true;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProjectVisibility visibility = ProjectVisibility.PRIVATE;
 
-    @Column(name = "is_active")
-    private Boolean isActive = true;
-
-    @Column(name = "view_count")
-    private Long viewCount = 0L;
-
-    @Column(name = "like_count")
-    private Long likeCount = 0L;
-
-    /**
-     * @ManyToOne - Many projects belong to one user
-     * @JoinColumn - Creates foreign key column "user_id" in projects table
-     * FetchType.LAZY - Loads user only when accessed (better performance)
-     * @JsonIgnore - Prevents circular reference when serializing to JSON
-     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     @JsonIgnore
-    private User user;
+    private User owner;
 
-    /**
-     * @OneToMany - One project has many comments
-     * mappedBy - Points to the "project" field in Comment entity
-     * CascadeType.ALL - Deleting project deletes all its comments
-     * orphanRemoval - Deleting comment from list removes it from database
-     * @JsonIgnore - Prevents circular reference when serializing to JSON
-     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    @JsonIgnore
+    private Team team;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id")
+    @JsonIgnore
+    private Organization organization;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "source_idea_id")
+    @JsonIgnore
+    private Idea sourceIdea;
+
+    @Column(name = "cover_image_url", columnDefinition = "TEXT")
+    private String coverImageUrl;
+
+    @Column(name = "repo_url", columnDefinition = "TEXT")
+    private String repoUrl;
+
+    @Column(name = "demo_url", columnDefinition = "TEXT")
+    private String demoUrl;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProjectMembers> projectMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Attachment> attachments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProjectTag> projectTags = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 
 /**
- * PasswordResetToken Entity - Represents password reset tokens for users
+ * EmailVerificationToken Entity - Represents email verification tokens for users
  */
 @Entity
-@Table(name = "password_reset_tokens")
+@Table(name = "email_verification_tokens")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Password_Reset_Token {
+public class EmailVerificationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

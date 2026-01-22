@@ -8,15 +8,18 @@ import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Comment Entity - Represents a comment on a project
+ * Comment Entity - Represents a comment on a project or idea
  * 
  * CONCEPTS TO LEARN:
- * 1. @ManyToOne - Many comments belong to one project
+ * 1. @ManyToOne - Many comments belong to one project/idea
  * 2. @ManyToOne - Many comments belong to one user (commenter)
- * 3. Bidirectional relationship - Comment knows its Project, Project knows its Comments
- * 4. @Hidden - Prevents Swagger from including this entity in API documentation
+ * 3. Self-referential relationship - Comments can have parent comments (nested comments)
+ * 4. Bidirectional relationship - Comment knows its Project/Idea, Project/Idea knows its Comments
+ * 5. @Hidden - Prevents Swagger from including this entity in API documentation
  */
 @Hidden
 @Entity
@@ -31,30 +34,31 @@ public class Comment {
     private Long id;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
+    private String body;
 
-    /**
-     * @ManyToOne - Many comments belong to one project
-     * @JoinColumn - Creates foreign key column "project_id" in comments table
-     * @JsonIgnore - Prevents circular reference when serializing to JSON
-     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
+    @JsonIgnore
+    private User author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
     @JsonIgnore
     private Project project;
 
-    /**
-     * @ManyToOne - Many comments belong to one user (the commenter)
-     * @JoinColumn - Creates foreign key column "user_id" in comments table
-     * @JsonIgnore - Prevents circular reference when serializing to JSON
-     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "idea_id")
     @JsonIgnore
-    private User user;
+    private Idea idea;
 
-    @Column(name = "is_edited")
-    private Boolean isEdited = false;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    @JsonIgnore
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Comment> replies = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -71,6 +75,5 @@ public class Comment {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-        isEdited = true;
     }
 }

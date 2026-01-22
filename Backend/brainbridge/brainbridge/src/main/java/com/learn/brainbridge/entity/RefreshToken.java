@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 
 /**
- * PasswordResetToken Entity - Represents password reset tokens for users
+ * RefreshToken Entity - Represents refresh tokens for user authentication
  */
 @Entity
-@Table(name = "password_reset_tokens")
+@Table(name = "refresh_tokens")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Password_Reset_Token {
+public class RefreshToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,9 @@ public class Password_Reset_Token {
     @Column(name = "expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
-    @Column
-    private Boolean used = false;
+    @Column(name = "user_agent", length = 255)
+    private String userAgent;
+
+    @Column(length = 50)
+    private String ip;
 }

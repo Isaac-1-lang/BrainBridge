@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 
@@ -16,9 +17,9 @@ import java.time.LocalDateTime;
  * 3. @Id - Marks the primary key field
  * 4. @GeneratedValue - Auto-generates the ID value
  * 5. @Column - Customizes column properties (name, nullable, unique, etc.)
- * 6. @Enumerated - Maps Java enum to database column
- * 7. @CreationTimestamp - Automatically sets creation time
- * 8. @UpdateTimestamp - Automatically updates modification time
+ * 6. @ManyToOne - Many users belong to one organization
+ * 7. @PrePersist - Executes before entity is saved for the first time
+ * 8. @PreUpdate - Executes before entity is updated
  * 9. Lombok annotations (@Data, @NoArgsConstructor, @AllArgsConstructor) - Reduces boilerplate
  */
 @Entity
@@ -32,23 +33,35 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment ID
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 255)
     private String username;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password_hash", nullable = false, length = 255)
+    @JsonIgnore
+    private String passwordHash;
 
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name", length = 255)
     private String firstName;
 
-    @Column(name = "last_name", length = 50)
+    @Column(name = "last_name", length = 255)
     private String lastName;
 
-    @Column(name = "profile_image_url")
+    @Column(name = "profile_image_url", columnDefinition = "TEXT")
     private String profileImageUrl;
+
+    @Column(length = 50)
+    private String phone;
+
+    @Column(columnDefinition = "TEXT")
+    private String biography;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id")
+    @JsonIgnore
+    private Organization organization;
 
     @Column(name = "is_active")
     private Boolean isActive = true; // Default value
