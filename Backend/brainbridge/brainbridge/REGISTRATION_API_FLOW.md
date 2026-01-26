@@ -51,8 +51,8 @@ public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody RegisterUserDTO 
 2. **`@RequestBody RegisterUserDTO`** - Spring converts JSON request body to Java object
    ```json
    {
-     "email": "user@example.com",
-     "username": "isaprecieux112@gmail.com",
+     "email": "ingenziacquilas@gmail.com",
+     "username": "Acquilas",
      "password": "Password123!",
      "confirmPassword": "Password123!",
      "firstName": "NIYOBYOSE",
