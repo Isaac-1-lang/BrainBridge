@@ -6,6 +6,8 @@ import com.learn.brainbridge.dtos.UserDTO;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 /**
  * UserService Interface - Defines business logic operations
  * 
@@ -14,6 +16,7 @@ import java.util.List;
  * 2. Interface-based design - Allows for different implementations
  * 3. Service methods represent business operations, not database operations
  */
+@Service
 public interface UserService {
     
     /**
