@@ -5,12 +5,9 @@ import com.learn.brainbridge.dtos.AnalyticsDTO;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 /**
  * AnalyticsService Interface - Defines business logic operations for Analytics
  */
-@Service
 public interface AnalyticsService {
     
     /**
