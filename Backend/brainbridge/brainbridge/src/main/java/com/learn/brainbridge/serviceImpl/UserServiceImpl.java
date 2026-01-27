@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         
         // Business validation: Check if username already exists
         if (userRepository.existsByUsername(registerDTO.getUsername())) {
-            return new ApiResponses1<>(false,"Email already exists",null);
+            return new ApiResponses1<>(false,"Username already exists",null);
         }
         
         // Convert DTO to Entity
