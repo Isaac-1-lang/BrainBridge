@@ -4,6 +4,7 @@ import com.learn.brainbridge.dtos.LoginDTO;
 import com.learn.brainbridge.dtos.RegisterUserDTO;
 import com.learn.brainbridge.dtos.UserDTO;
 import com.learn.brainbridge.generics.ApiResponses1;
+import com.learn.brainbridge.service.EmailVerificationService;
 import com.learn.brainbridge.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.MediaType;
 
 import java.util.List;
 
@@ -55,6 +54,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailVerificationService emailVerificationService;
+
     /**
      * POST /api/users/register
      * Register a new user
@@ -75,6 +77,18 @@ public class UserController {
         // For now we ignore profileImage and pass null; you can extend this later for file upload
         ApiResponses1<UserDTO> response = userService.registerUser(registerUserDTO, null);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/verify-email")
+    @Operation(summary = "Verify email", description = "Verifies a user's email using a verification token sent by email.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Email verified successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid or expired token")
+    })
+    public ResponseEntity<ApiResponses1<Void>> verifyEmail(@RequestParam("token") String token) {
+        emailVerificationService.verifyToken(token);
+        ApiResponses1<Void> response = new ApiResponses1<>(true, "Email verified successfully", null);
+        return ResponseEntity.ok(response);
     }
     
     @PostMapping("/login")

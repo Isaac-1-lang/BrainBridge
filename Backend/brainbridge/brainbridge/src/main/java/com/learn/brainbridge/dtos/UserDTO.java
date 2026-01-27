@@ -56,4 +56,7 @@ public class UserDTO {
     private LocalDateTime deActivated;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isVerified;
+    private boolean isAdmin;
+    
 }

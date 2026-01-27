@@ -8,6 +8,7 @@ import com.learn.brainbridge.dtos.UserDTO;
 import com.learn.brainbridge.entity.User;
 import com.learn.brainbridge.generics.ApiResponses1;
 import com.learn.brainbridge.repository.UserRepository;
+import com.learn.brainbridge.service.EmailVerificationService;
 import com.learn.brainbridge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmailVerificationService emailVerificationService;
+
     /**
      * Register a new user
      * Business logic:
@@ -55,13 +59,10 @@ public class UserServiceImpl implements UserService {
     public ApiResponses1<UserDTO>  registerUser(RegisterUserDTO registerDTO,MultipartFile profileImage) {
         // Business validation: Check if email already exists
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
-            return new ApiResponses1<>(false,"Email already exists",null);
+            throw new BadRequestException("Email already exists: " + registerDTO.getEmail());
         }
         
-        // Business validation: Check if username already exists
-        if (userRepository.existsByUsername(registerDTO.getUsername())) {
-            return new ApiResponses1<>(false,"Username already exists",null);
-        }
+        
         
         // Convert DTO to Entity
         User user = new User();
@@ -75,6 +76,15 @@ public class UserServiceImpl implements UserService {
         
         // Save to database (JPA automatically handles the insert)
         User savedUser = userRepository.save(user);
+
+        // send email verification (best-effort; failures should be visible in logs)
+        try {
+            emailVerificationService.sendVerificationEmail(savedUser);
+        } catch (Exception e) {
+            // log and continue; user can still log in but will not be verified
+            e.printStackTrace();
+        }
+
         UserDTO userDTO  = convertToDTO(savedUser);
         
         // Convert Entity to DTO and return
