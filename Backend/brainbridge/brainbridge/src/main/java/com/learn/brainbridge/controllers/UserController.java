@@ -62,7 +62,7 @@ public class UserController {
      * @param registerDTO - User registration data from request body
      * @return ResponseEntity with created user and HTTP 201 CREATED status
      */
-    @PostMapping(value = "/register",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/register")
     @Operation(summary = "Register a new user", description = "Creates a new user account with email, username, and password.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User registered successfully",
@@ -71,9 +71,9 @@ public class UserController {
             @ApiResponse(responseCode = "500", description="Internal Server Error")
     })
     public ResponseEntity<ApiResponses1<UserDTO>> registerUser(
-            @RequestPart("user") @Valid RegisterUserDTO registerUserDTO,
-            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
-        ApiResponses1<UserDTO> response = userService.registerUser(registerUserDTO, profileImage);
+            @Valid @RequestBody RegisterUserDTO registerUserDTO) {
+        // For now we ignore profileImage and pass null; you can extend this later for file upload
+        ApiResponses1<UserDTO> response = userService.registerUser(registerUserDTO, null);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
