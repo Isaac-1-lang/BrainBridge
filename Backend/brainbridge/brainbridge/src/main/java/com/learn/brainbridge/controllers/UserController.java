@@ -3,6 +3,7 @@ package com.learn.brainbridge.controllers;
 import com.learn.brainbridge.dtos.LoginDTO;
 import com.learn.brainbridge.dtos.RegisterUserDTO;
 import com.learn.brainbridge.dtos.UserDTO;
+import com.learn.brainbridge.generics.ApiResponses1;
 import com.learn.brainbridge.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -60,41 +61,30 @@ public class UserController {
      * @return ResponseEntity with created user and HTTP 201 CREATED status
      */
     @PostMapping("/register")
-    @Operation(
-            summary = "Register a new user",
-            description = "Creates a new user account with email, username, and password."
-    )
+    @Operation(summary = "Register a new user", description = "Creates a new user account with email, username, and password.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User registered successfully",
                     content = @Content(schema = @Schema(implementation = UserDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input or email/username already exists")
     })
-    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody RegisterUserDTO registerDTO) {
-        UserDTO createdUser = userService.registerUser(registerDTO);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public ResponseEntity<ApiResponses1<UserDTO>> registerUser(@Valid @RequestBody RegisterUserDTO registerDTO) {
+        ApiResponses1<UserDTO> response = userService.registerUser(registerDTO);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
-    /**
-     * POST /api/users/login
-     * Login a user
-     * 
-     * @param loginDTO - Login credentials from request body
-     * @return ResponseEntity with user data and HTTP 200 OK status
-     */
+    
     @PostMapping("/login")
-    @Operation(
-            summary = "Login user",
-            description = "Authenticates a user with email/username and password."
-    )
+    @Operation(summary = "Login user", description = "Authenticates a user with email/username and password.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Login successful",
                     content = @Content(schema = @Schema(implementation = UserDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid credentials or account deactivated")
     })
-    public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
-        UserDTO user = userService.loginUser(loginDTO);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<ApiResponses1<UserDTO>> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
+        UserDTO user  = userService.loginUser(loginDTO);
+        ApiResponses1<UserDTO> response  = new ApiResponses1<>(true,"Logged in successfully",user);
+        return ResponseEntity.ok(response);
     }
+    
 
     /**
      * GET /api/users/{id}

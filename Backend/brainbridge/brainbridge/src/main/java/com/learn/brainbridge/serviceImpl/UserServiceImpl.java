@@ -6,6 +6,7 @@ import com.learn.brainbridge.dtos.LoginDTO;
 import com.learn.brainbridge.dtos.RegisterUserDTO;
 import com.learn.brainbridge.dtos.UserDTO;
 import com.learn.brainbridge.entity.User;
+import com.learn.brainbridge.generics.ApiResponses1;
 import com.learn.brainbridge.repository.UserRepository;
 import com.learn.brainbridge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,15 +51,15 @@ public class UserServiceImpl implements UserService {
      * 4. Convert to DTO and return
      */
     @Override
-    public UserDTO registerUser(RegisterUserDTO registerDTO) {
+    public ApiResponses1<UserDTO>  registerUser(RegisterUserDTO registerDTO) {
         // Business validation: Check if email already exists
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
-            throw new BadRequestException("Email already exists: " + registerDTO.getEmail());
+            return new ApiResponses1<>(false,"Email already exists",null);
         }
         
         // Business validation: Check if username already exists
         if (userRepository.existsByUsername(registerDTO.getUsername())) {
-            throw new BadRequestException("Username already exists: " + registerDTO.getUsername());
+            return new ApiResponses1<>(false,"Email already exists",null);
         }
         
         // Convert DTO to Entity
@@ -73,9 +74,10 @@ public class UserServiceImpl implements UserService {
         
         // Save to database (JPA automatically handles the insert)
         User savedUser = userRepository.save(user);
+        UserDTO userDTO  = convertToDTO(savedUser);
         
         // Convert Entity to DTO and return
-        return convertToDTO(savedUser);
+        return new ApiResponses1<>(true,"User registered successfully",userDTO);
     }
 
     /**

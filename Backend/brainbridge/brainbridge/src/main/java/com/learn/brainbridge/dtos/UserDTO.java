@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * UserDTO - Data Transfer Object for User
  * 
@@ -44,6 +46,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String profileImageUrl;
+    @JsonIgnore
     private String password;
     private Boolean isActive;
     private Boolean isEmailVerified;

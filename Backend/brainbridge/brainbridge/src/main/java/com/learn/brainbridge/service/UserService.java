@@ -3,6 +3,7 @@ package com.learn.brainbridge.service;
 import com.learn.brainbridge.dtos.LoginDTO;
 import com.learn.brainbridge.dtos.RegisterUserDTO;
 import com.learn.brainbridge.dtos.UserDTO;
+import com.learn.brainbridge.generics.ApiResponses1;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface UserService {
      * @param registerDTO User registration data
      * @return Created user DTO
      */
-    UserDTO registerUser(RegisterUserDTO registerDTO);
+    ApiResponses1<UserDTO> registerUser(RegisterUserDTO registerDTO);
     
     /**
      * Login a user
