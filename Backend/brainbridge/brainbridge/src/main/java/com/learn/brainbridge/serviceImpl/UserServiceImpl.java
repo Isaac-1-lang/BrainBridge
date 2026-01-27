@@ -11,6 +11,7 @@ import com.learn.brainbridge.repository.UserRepository;
 import com.learn.brainbridge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
      * 4. Convert to DTO and return
      */
     @Override
-    public ApiResponses1<UserDTO>  registerUser(RegisterUserDTO registerDTO) {
+    public ApiResponses1<UserDTO>  registerUser(RegisterUserDTO registerDTO,MultipartFile profileImage) {
         // Business validation: Check if email already exists
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             return new ApiResponses1<>(false,"Email already exists",null);

@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 
@@ -60,15 +62,18 @@ public class UserController {
      * @param registerDTO - User registration data from request body
      * @return ResponseEntity with created user and HTTP 201 CREATED status
      */
-    @PostMapping("/register")
+    @PostMapping(value = "/register",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Register a new user", description = "Creates a new user account with email, username, and password.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User registered successfully",
                     content = @Content(schema = @Schema(implementation = UserDTO.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input or email/username already exists")
+            @ApiResponse(responseCode = "400", description = "Invalid input or email/username already exists"),
+            @ApiResponse(responseCode = "500", description="Internal Server Error")
     })
-    public ResponseEntity<ApiResponses1<UserDTO>> registerUser(@Valid @RequestBody RegisterUserDTO registerDTO) {
-        ApiResponses1<UserDTO> response = userService.registerUser(registerDTO);
+    public ResponseEntity<ApiResponses1<UserDTO>> registerUser(
+            @RequestPart("user") @Valid RegisterUserDTO registerUserDTO,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
+        ApiResponses1<UserDTO> response = userService.registerUser(registerUserDTO, profileImage);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
