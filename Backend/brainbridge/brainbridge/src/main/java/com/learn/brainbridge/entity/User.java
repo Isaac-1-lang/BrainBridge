@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDateTime;
 
@@ -40,6 +41,7 @@ public class User {
     private String username;
 
     @Column(name = "password_hash", nullable = false, length = 255)
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Confirm password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")
     @JsonIgnore
     private String passwordHash;
 
